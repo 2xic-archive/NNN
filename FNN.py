@@ -108,7 +108,7 @@ if __name__ == "__main__":
 		neuralNetwork.createNeuron((4, trainingOutput.shape[-1]), activator=specialSoftmax, setAxis=True)
 		neuralNetwork.data = data
 	for count in range(100000):
-		#	skipping input neuron
+		#	skipping input layer
 		currentNeuron =  neuralNetwork.firstNeuron.next	
 
 		# 	feedforward
