@@ -5,8 +5,8 @@ import pickle
 def getpath():
 	return "/".join(os.path.realpath(__file__).split("/")[:-2]) + "/"
 
-def loadState(i):
-	location = "{}state/{}.pkl".format(getpath(), i)
+def loadState(name):
+	location = "{}state/{}.pkl".format(getpath(), name)
 	print("Loading ... {}".format(location))
 	if(os.path.exists(location)):
 		file = open(location, "rb")
@@ -17,9 +17,12 @@ def loadState(i):
 	else:
 		raise Exception("File not found {}".format(location))
 
-def saveState(inputclass, i):
-	location = "{}state/{}.{}".format(getpath(), i, "pkl")
+def saveState(inputClass, name):
+	location = "{}state/".format(getpath())
+	if not (os.path.exists(location)):
+		os.makedirs(location)
+	location += "{}.{}".format(name, "pkl")
 	print("Saving ... {}".format(location))
 	output = open(location, 'wb')
-	pickle.dump(inputclass, output)
+	pickle.dump(inputClass, output)
 	output.close()

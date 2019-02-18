@@ -169,9 +169,9 @@ class Network:
 		self.prepareForBatch()
 
 	def miniBatch(self, X, Y):
-		for i in range(self.batchingSize):
-			self.input = X[i]
-			self.output = Y[i]
+		for index in range(self.batchingSize):
+			self.input = X[index]
+			self.output = Y[index]
 			self.feedForward(self.input)
 			self.feedBackward()
 
@@ -183,11 +183,11 @@ class Network:
 
 
 	def back(self, protection=True):
-		if not isNoneType(self.neuron.back) or not protection:
+		if (not isNoneType(self.neuron.back) or not protection):
 			self.neuron = self.neuron.back
 
 	def next(self, protection=True):
-		if not isNoneType(self.neuron.next) or not protection:
+		if (not isNoneType(self.neuron.next) or not protection):
 			self.neuron = self.neuron.next
 
 	def getFrontNeuron(self):
@@ -208,15 +208,16 @@ class Network:
 		return np.random.rand(size[0], size[1]) 
 
 	def testNetwork(self, testingInput, testingOutput):
-		Score = 0
+		error = 0
 		for testImage in range(testingInput.shape[0]):
 			inputImage = np.zeros((1, 28, 28))
 			inputImage[0, : , : ] = testingInput[testImage]
 			self.input = inputImage
 
-			if(self.predict(self.input) == np.argmax(testingOutput[testImage])):
-				Score += 1
-		print("Error == {}".format(Score/testingInput.shape[0] * 100))
+			if not self.predict(self.input) == np.argmax(testingOutput[testImage]):
+				error += 1
+
+		print("Error == {}".format(error/testingInput.shape[0] * 100))
 
 if __name__ == "__main__":
 	data = DataParser()

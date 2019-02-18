@@ -59,8 +59,8 @@ class Convilution:
 									inputImage.shape[0],
 									inputImage.shape[1],
 								))
-		for i in range(self.kernelCount):
-			appliedKernel[i, :, :] = self.conviulutionKernel(self.kernelList[i, :], inputImage)
+		for index in range(self.kernelCount):
+			appliedKernel[index, :, :] = self.conviulutionKernel(self.kernelList[index, :], inputImage)
 		return appliedKernel
 
 

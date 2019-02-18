@@ -50,10 +50,10 @@ class NeuronNetwork:
 		def isNoneType(value):
 			return (type(value) == type(None))
 	
-		if(not isNoneType(backNeuron.synapse)):
+		if not isNoneType(backNeuron.synapse):
 			if not (backNeuron.synapse.shape[-1] == nextNeuron.synapse.shape[0]):
 				raise Exception("Bad neuron arcitecture {}	->	{}".format(backNeuron.number, nextNeuron.number))
-		elif not(backNeuron.layerActivation.shape[-1] == nextNeuron.synapse.shape[0]):
+		elif not backNeuron.layerActivation.shape[-1] == nextNeuron.synapse.shape[0]:
 			raise Exception("Bad neuron arcitecture {}	->	{}".format(backNeuron.number, nextNeuron.number))
 
 
@@ -68,8 +68,8 @@ class NeuronNetwork:
 	def classifyImage(self, inputImage):
 		imageConvilution = self.data.parsed(inputImage)
 		classification = np.zeros((self.lastNeuron.synapse.shape[-1],))
-		for i in range(convolutionLayer.kernelCount):
-			response = self.predict(np.hstack(imageConvilution[i, :, :]))
+		for index in range(convolutionLayer.kernelCount):
+			response = self.predict(np.hstack(imageConvilution[index, :, :]))
 			classification += response
 		classification = classification / convolutionLayer.kernelCount
 		return np.argmax(classification)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
 			else:
 				currentNeuron.error = (currentNeuron.next.error).dot(currentNeuron.next.synapse.T)
 					
-				delta = currentNeuron.error * currentNeuron.activator(currentNeuron.layerPlain, deriv=True)
+				delta = currentNeuron.error * currentNeuron.activator(currentNeuron.layerPlain, derivation=True)
 		
 				currentNeuron.bias -= (10e-6) * delta.sum(axis=0)	
 				currentNeuron.newSyn -= (10e-6) * currentNeuron.back.layerActivation.T.dot(delta)
